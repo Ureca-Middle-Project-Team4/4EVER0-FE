@@ -1,1 +1,13 @@
-npx jira-prepare-commit-msg $1
+#!/bin/sh
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+TICKET_ID=$(echo "$BRANCH_NAME" | grep -oE '[A-Z]+-[0-9]+')
+
+if [ -f "$1" ] && [ "$TICKET_ID" ]; then
+  # 이미 포함된 경우 중복 방지
+  if ! grep -q "\[$TICKET_ID\]" "$1"; then
+    TYPE=$(cut -d ':' -f 1 < "$1")
+    REST=$(cut -d ':' -f 2- < "$1" | sed 's/^[[:space:]]*//')
+    echo "$TYPE: [$TICKET_ID] $REST" > "$1"
+  fi
+fi

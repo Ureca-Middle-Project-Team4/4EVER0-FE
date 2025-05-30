@@ -12,9 +12,9 @@
     "test": "jest --watchAll",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_2ca9de6b3535f59",
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_TOKEN",
     "format": "prettier --cache --write .",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
