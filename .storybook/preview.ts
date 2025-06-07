@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
-import "../src/index.css";
+import "../src/styles/index.css";
 
 const preview: Preview = {
   parameters: {
@@ -21,29 +21,13 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        light: "", //
+        light: "",
         dark: "dark",
       },
       defaultTheme: "light",
       parentSelector: "html",
     }),
   ],
-};
-
-export const globalTypes = {
-  theme: {
-    name: "Theme",
-    description: "Global theme for components",
-    defaultValue: "light",
-    toolbar: {
-      icon: "mirror",
-      items: [
-        { value: "light", icon: "sun", title: "Light Mode" },
-        { value: "dark", icon: "moon", title: "Dark Mode" },
-      ],
-      showName: true,
-    },
-  },
 };
 
 export default preview;

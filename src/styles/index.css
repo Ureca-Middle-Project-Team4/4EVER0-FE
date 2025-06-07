@@ -1,0 +1,41 @@
+/* 1) Import custom CSS files like tokens, base styles, and utilities first */
+@import "./tokens.css";
+@import "./base.css";
+@import "./utilities.css";
+
+/* 2) Import TailwindCSS core styles using @import or @tailwind directives */
+@import "tailwindcss";
+
+/* 3) Define custom dark mode variants with @custom-variant for `.dark` class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 4) Declare CSS variables inside @theme block for light mode; place after imports */
+@theme {
+  --color-bg: #ffffff;
+  --color-bg-dark: #000000;
+
+  --color-brand-red: #dd4640;
+  --color-brand-red-hover: #c83d39;
+  --color-brand-red-light: #f8e0df;
+
+  --color-brand-yellow: #f4de75;
+  --color-brand-yellow-hover: #e2cc64;
+  --color-brand-yellow-light: #fcf5d9;
+
+  --color-brand-darkblue: #25394b;
+  --color-brand-darkblue-hover: #1f2f3e;
+  --color-brand-darkblue-light: #dde3e8;
+
+  --color-positive: #22c55e;
+  --color-positive-bg: #e8fbe9;
+  --color-cautionary: #eab308;
+  --color-cautionary-bg: #fef9c3;
+  --color-negative: #ef4444;
+  --color-negative-bg: #fee2e2;
+}
+
+/* Dark mode overrides using @custom-variant */
+@theme dark {
+  --color-bg: #000000;
+  --color-bg-dark: #ffffff;
+}

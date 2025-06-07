@@ -1,0 +1,66 @@
+@layer base {
+  @font-face {
+    font-family: "Pretendard";
+    src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    @apply border-border outline-ring/50;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+    font-size: 16px;
+    font-family: "Pretendard", sans-serif;
+    overflow-x: hidden;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input,
+  button,
+  textarea {
+    font: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+
+  input:focus,
+  button:focus,
+  textarea:focus {
+    outline: 2px solid theme("colors.ring.DEFAULT", #3b82f6);
+    outline-offset: 2px;
+  }
+}
