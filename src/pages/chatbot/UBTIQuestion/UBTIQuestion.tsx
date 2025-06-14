@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useUBTIMutation } from '@/hooks/useChatMutation';
 import { useChatStore } from '@/stores/useChatStore';
 
 interface UBTIQuestionProps {
   onComplete: (result: string) => void;
+  isMunerTone?: boolean;
 }
 
-export const UBTIQuestionComponent: React.FC<UBTIQuestionProps> = ({ onComplete }) => {
+export const UBTIQuestionComponent: React.FC<UBTIQuestionProps> = ({
+  onComplete,
+  isMunerTone = true,
+}) => {
   const [step, setStep] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const { currentSessionId, addMessage, updateLastBotMessage } = useChatStore();
@@ -31,6 +35,7 @@ export const UBTIQuestionComponent: React.FC<UBTIQuestionProps> = ({ onComplete 
         await ubtiMutation.mutateAsync({
           sessionId: currentSessionId,
           message: answer,
+          tone: isMunerTone ? 'muneoz' : 'general',
           onChunk: (chunk: string) => {
             fullResponseRef.current += chunk;
             updateLastBotMessage(currentSessionId, fullResponseRef.current);
@@ -40,7 +45,7 @@ export const UBTIQuestionComponent: React.FC<UBTIQuestionProps> = ({ onComplete 
         // 3단계(step 2) 완료 후 결과 전달
         if (step >= 2) {
           setIsCompleted(true);
-          // 약간의 지연 후 완료 처리
+          // 지연 1초 후 완료 처리
           setTimeout(() => {
             onComplete(fullResponseRef.current);
           }, 1000);
@@ -52,7 +57,15 @@ export const UBTIQuestionComponent: React.FC<UBTIQuestionProps> = ({ onComplete 
         updateLastBotMessage(currentSessionId, 'UBTI 질문 처리 중 오류가 발생했습니다.');
       }
     },
-    [currentSessionId, addMessage, updateLastBotMessage, ubtiMutation, step, onComplete],
+    [
+      currentSessionId,
+      addMessage,
+      updateLastBotMessage,
+      ubtiMutation,
+      step,
+      onComplete,
+      isMunerTone,
+    ],
   );
 
   // 컴포넌트 마운트 시 UBTI 시작

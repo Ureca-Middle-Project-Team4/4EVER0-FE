@@ -1,13 +1,17 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/Button';
 import { useLikesRecommendationMutation } from '@/hooks/useChatMutation';
 import { useChatStore } from '@/stores/useChatStore';
 
 interface LikesRecommendationProps {
   onComplete: () => void;
+  isMunerTone?: boolean;
 }
 
-export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComplete }) => {
+export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({
+  onComplete,
+  isMunerTone = true,
+}) => {
   const [recommendationComplete, setRecommendationComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { currentSessionId, addMessage, updateLastBotMessage } = useChatStore();
@@ -18,10 +22,11 @@ export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComp
   useEffect(() => {
     console.log('LikesRecommendation 컴포넌트 마운트됨');
     console.log('currentSessionId:', currentSessionId);
+    console.log('isMunerTone:', isMunerTone);
     return () => {
       console.log('LikesRecommendation 컴포넌트 언마운트됨');
     };
-  }, [currentSessionId]);
+  }, [currentSessionId, isMunerTone]);
 
   const handleGetRecommendation = useCallback(async () => {
     console.log('추천 요청 시작');
@@ -52,6 +57,7 @@ export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComp
 
       await likesRecommendationMutation.mutateAsync({
         sessionId: currentSessionId,
+        tone: isMunerTone ? 'muneoz' : 'general',
         onChunk: (chunk: string) => {
           console.log('청크 받음:', chunk.substring(0, 50) + '...');
           fullResponseRef.current += chunk;
@@ -68,7 +74,13 @@ export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComp
     } finally {
       setIsLoading(false);
     }
-  }, [currentSessionId, addMessage, updateLastBotMessage, likesRecommendationMutation]);
+  }, [
+    currentSessionId,
+    addMessage,
+    updateLastBotMessage,
+    likesRecommendationMutation,
+    isMunerTone,
+  ]);
 
   const handleComplete = useCallback(() => {
     console.log('추천 완료 처리');
@@ -84,6 +96,7 @@ export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComp
         <p className="text-sm text-gray-600">
           좋아요하신 브랜드를 바탕으로 맞춤 구독을 추천해드릴게요!
         </p>
+        <p className="text-xs text-gray-500 mt-1">톤: {isMunerTone ? '무너' : '일반'}</p>
       </div>
 
       {/* 디버깅 정보 */}
@@ -92,6 +105,7 @@ export const LikesRecommendation: React.FC<LikesRecommendationProps> = ({ onComp
         <p>로딩 상태: {isLoading ? '로딩 중' : '대기'}</p>
         <p>추천 완료: {recommendationComplete ? '완료' : '미완료'}</p>
         <p>응답 길이: {fullResponseRef.current.length}</p>
+        <p>톤 설정: {isMunerTone ? '무너' : '일반'}</p>
       </div>
 
       {!recommendationComplete ? (

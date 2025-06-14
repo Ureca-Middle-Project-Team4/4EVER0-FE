@@ -1,19 +1,6 @@
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface Message {
-  id: string;
-  type: 'user' | 'bot';
-  content: string;
-  timestamp: Date;
-}
-
-interface ChatSession {
-  sessionId: string;
-  messages: Message[];
-  usageCount: number;
-  isCompleted: boolean;
-}
+import { Message, ChatSession } from '@/types/chat';
 
 interface ChatStore {
   sessions: Record<string, ChatSession>;

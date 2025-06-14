@@ -9,7 +9,13 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system">
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem={true}
+      storageKey="moonoz-theme"
+      disableTransitionOnChange={false}
+    >
       {children}
     </NextThemesProvider>
   );

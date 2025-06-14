@@ -2,6 +2,7 @@
 export interface SendChatMessageRequest {
   session_id: string;
   message: string;
+  tone: 'muneoz' | 'general';
 }
 
 export interface SendChatMessageStreamChunk {
@@ -10,6 +11,7 @@ export interface SendChatMessageStreamChunk {
 
 export interface LikesRecommendationRequest {
   session_id: string;
+  tone: 'muneoz' | 'general';
 }
 
 export interface LikesRecommendationChunk {
@@ -18,7 +20,8 @@ export interface LikesRecommendationChunk {
 
 export interface SendUBTIRequest {
   session_id: string;
-  message: string;
+  message?: string;
+  tone: 'muneoz' | 'general';
 }
 
 export interface UBTIChunk {
