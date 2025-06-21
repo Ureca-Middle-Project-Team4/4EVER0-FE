@@ -31,7 +31,7 @@ export const Coupon: React.FC<CouponProps> = ({
           <div>
             <p className="subtitle-1">{brandName}</p>
             <p className="body-2 text-gray-600">{description}</p>
-            <p className="caption-2 text-muted-foreground">{dateRange}</p>
+            {dateRange && <p className="text-xs text-gray-600">{dateRange}</p>}
           </div>
         </div>
       </div>

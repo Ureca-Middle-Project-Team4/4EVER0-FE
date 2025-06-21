@@ -1,41 +1,28 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { CouponTicket } from './CouponTicket';
-import { getTicketBackground } from '@/utils/getTicketBackground';
 import { fetchUserCoupons } from '@/apis/coupon/getUserCoupons';
 import type { Coupon } from '@/types/coupon';
 import { Ticket } from 'lucide-react';
 import Empty from '@/pages/common/Empty';
 import { IMAGES } from '@/constant/imagePath';
-
-const formatDiscount = (value?: number, type?: string) => {
-  if (!value || !type) return '';
-  return type === 'PERCENT' ? `${value}% 할인` : `${value.toLocaleString()}원 할인`;
-};
+import { Coupon as CouponCard } from '@/components/Coupon/Coupon';
 
 const Coupons: React.FC = () => {
   const { data: coupons = [], isLoading } = useQuery<Coupon[]>({
     queryKey: ['userCoupons'],
     queryFn: fetchUserCoupons,
   });
-  const colorCycle: Array<'red' | 'yellow' | 'gray'> = ['red', 'yellow', 'gray'];
+
   const availableCoupons = coupons.filter((c) => !c.isUsed);
   if (isLoading) return <div className="p-4">로딩 중...</div>;
-  console.log('쿠폰 데이터:', coupons);
-  console.log('쿠폰 구조 예시', coupons[0]);
-
   console.log(
-    '쿠폰 ID 목록:',
-    coupons.map((c) => c.couponId),
-  );
-
-  console.log(
-    coupons.map((c) => ({
-      id: c.couponId,
-      brand: c.brand.name,
-      image: c.brand.imageUrl,
+    availableCoupons.map((c) => ({
+      title: c.title,
+      startDate: c.startDate,
+      endDate: c.endDate,
     })),
   );
+
   return (
     <div className="px-4 py-6 pb-24">
       <div className="text-center mb-6">
@@ -55,16 +42,18 @@ const Coupons: React.FC = () => {
           buttonLink="/home"
         />
       ) : (
-        availableCoupons.map((coupon, index) => (
-          <CouponTicket
-            key={coupon.couponId}
-            brand={coupon.brand.name}
-            title={coupon.title}
-            description={formatDiscount(coupon.discount_value, coupon.discount_type)}
-            background={getTicketBackground(colorCycle[index % colorCycle.length])}
-            logoUrl={coupon.brand.imageUrl}
-          />
-        ))
+        <div className="flex flex-col gap-4">
+          {availableCoupons.map((coupon) => (
+            <CouponCard
+              key={coupon.couponId}
+              type="owned"
+              brandName={coupon.brand.name}
+              description={coupon.title}
+              dateRange={`${coupon.startDate?.replace(/-/g, '.')} - ${coupon.endDate?.replace(/-/g, '.')}`}
+              imageUrl={coupon.brand.imageUrl}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
