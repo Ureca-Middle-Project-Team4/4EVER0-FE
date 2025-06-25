@@ -80,15 +80,14 @@ const HotPlace = () => {
 
   return (
     <div className="space-y-4 min-h-full overflow-y">
-      {/* 헤더 섹션 - 마이페이지 스타일 적용 */}
-      <div>
-        <div className="flex items-start gap-2 mt-6 text-brand-darkblue">
-          <h2 className="title-1 mt-6 flex items-center text-brand-darkblue gap-2">
+      {/* 헤더 섹션 */}
+      <div className="px-4 ">
+        <div className="flex items-start gap-2 mt-4 text-brand-darkblue">
+          <h2 className="title-1 flex items-center text-brand-darkblue gap-2">
             <img src={IMAGES.MOONER['mooner-hotplace']} alt="문어 아이콘" className="w-15 h-15" />
             요즘 뜨는 핫플레이스를 찾고, <br />내 근처 쿠폰을 저장해보세요!
           </h2>
         </div>
-
         {/* MZ PICK 배너 */}
         <div className="mt-6 mb-4">
           <Card className="bg-gradient-to-r from-brand-yellow to-brand-red text-white">
