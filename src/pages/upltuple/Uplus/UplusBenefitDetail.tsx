@@ -104,7 +104,7 @@ export const BenefitDetailModal = ({ isOpen, onClose, selectedDate }: BenefitDet
                     className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0`}
                   >
                     <img
-                      src={benefit.image_url}
+                      src={benefit.imageUrl}
                       alt={benefit.brand}
                       className="w-8 h-8 object-contain"
                       onError={(e) => {

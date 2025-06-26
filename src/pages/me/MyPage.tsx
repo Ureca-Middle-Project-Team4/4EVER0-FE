@@ -30,13 +30,9 @@ const MyPage: React.FC = () => {
     queryKey: ['currentPlan'],
     queryFn: fetchCurrentPlan,
   });
-  const { data: profile, isLoading: profileLoading, refetch: refetchProfile } = useUserProfile();
+  const { data: profile } = useUserProfile();
 
   const month = `${new Date().getMonth() + 1}월`;
-
-  useEffect(() => {
-    refetchProfile(); // Fetch the user profile on component mount
-  }, [refetchProfile]);
 
   const { data: coupons = [] } = useQuery({
     queryKey: ['userCoupons'],
@@ -130,10 +126,10 @@ const MyPage: React.FC = () => {
   };
 
   const usageData = [
-    formatUsage('데이터', 'data', plan?.data ?? ''),
-    formatUsage('통화', 'call', plan?.voice ?? ''),
-    formatUsage('공유데이터', 'sharedData', plan?.share_data ?? ''),
-    formatUsage('문자', 'sms', plan?.sms ?? ''),
+    formatUsage('데이터', 'data', plan.data),
+    formatUsage('통화', 'call', plan.voice),
+    formatUsage('공유데이터', 'sharedData', plan.share_data),
+    formatUsage('문자', 'sms', plan.sms),
   ];
 
   return (
@@ -156,41 +152,14 @@ const MyPage: React.FC = () => {
         )}
       </div>
       <div className="px-4">
-        {/* 내 요금제 */}
-        {(() => {
-          if (profileLoading) {
-            return (
-              <div className="space-y-2 py-4 px-4 bg-gray-200 rounded-lg text-center">
-                <h3 className="text-lg font-bold text-gray-700">요금제를 불러오는 중입니다...</h3>
-              </div>
-            );
-          }
-          if (plan) {
-            return (
-              <>
-                <h1 className="text-xl font-bold text-brand-darkblue mb-4">내 요금제</h1>
-                <BillSummaryCard
-                  phoneNumber={profile?.phoneNumber ?? '010-****-****'}
-                  planName={plan?.name ?? '기본 요금제'}
-                  month={month}
-                  amount={plan?.price ? Number(plan.price) : 0}
-                  usageData={usageData}
-                />
-              </>
-            );
-          }
-          return (
-            <div className="space-y-2 py-4 px-4 bg-gray-200 rounded-lg text-center">
-              <h3 className="text-lg font-bold text-gray-700">요금제가 없어요 😢</h3>
-              <p className="text-sm text-gray-500">
-                아직 가입한 요금제가 없습니다.
-                <br />
-                무너와 함께 완벽한 요금제를 찾아보세요! 🚀
-              </p>
-            </div>
-          );
-        })()}
-
+        <h1 className="text-xl font-bold text-brand-darkblue mb-4">내 요금제</h1>
+        <BillSummaryCard
+          phoneNumber={profile?.phoneNumber ?? '010-****-****'}
+          planName={plan.name}
+          month={month}
+          amount={Number(plan.price)}
+          usageData={usageData}
+        />
         <h1 className="text-xl font-bold text-brand-darkblue mt-4 mb-4">등급 안내</h1>
         <div className="space-y-4">
           {typeof profile?.point === 'number' && (
@@ -371,18 +340,12 @@ const MyPage: React.FC = () => {
 
           <h1 className="text-xl font-bold text-brand-darkblue mb-4 align-center">요금제 변경</h1>
           <div className="grid grid-cols-2 gap-3">
-            <Link to={`/plans`}>
-              <div className="bg-blue-50 rounded-xl p-4 text-center hover:bg-blue-100 transition-colors cursor-pointer">
-                <span className="text-sm font-medium text-brand-darkblue">
-                  다른 요금제 구경하기
-                </span>
-              </div>
-            </Link>
-            <Link to={`/plans/${profile?.planId}`}>
-              <div className="bg-negative-bg rounded-xl p-4 text-center hover:bg-negative/20 transition-colors cursor-pointer">
-                <span className="text-sm font-medium text-negative">요금제 해지하기</span>
-              </div>
-            </Link>
+            <div className="bg-blue-50 rounded-xl p-4 text-center hover:bg-blue-100 transition-colors cursor-pointer">
+              <span className="text-sm font-medium text-brand-darkblue">다른 요금제 구경하기</span>
+            </div>
+            <div className="bg-negative-bg rounded-xl p-4 text-center hover:bg-negative/20 transition-colors cursor-pointer">
+              <span className="text-sm font-medium text-negative">요금제 해지하기</span>
+            </div>
           </div>
         </div>
       </div>

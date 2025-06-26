@@ -27,6 +27,15 @@ interface StoreData {
   brandName: string;
 }
 
+// const pinColors = [
+//   '#EC4899', // 핑크
+//   '#3B82F6', // 블루
+//   '#10B981', // 그린
+//   '#F59E0B', // 옐로우
+//   '#A78BFA', // 퍼플
+//   '#EF4444', // 레드
+// ];
+
 export default function StoreMap({
   className = '',
   style = {},
@@ -47,9 +56,9 @@ export default function StoreMap({
   const [selectedStore, setSelectedStore] = useState<StoreData | null>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const { mapRef, isLoaded, isApiReady, mapInstance, addMarker, setCenter, setZoom } = useNaverMap({
+  const { mapRef, isLoaded, isApiReady, mapInstance, addMarker } = useNaverMap({
     center: { lat: 37.503325874722, lng: 127.04403462366 },
-    zoom: 14,
+    zoom: 7,
   });
 
   const markersRef = useRef<naver.maps.Marker[]>([]);
@@ -125,36 +134,13 @@ export default function StoreMap({
     }
     setLoadingLocation(true);
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
+      (position) => {
         setCurrentLocation({
-          lat: latitude,
-          lng: longitude,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
         });
-
-        try {
-          const response = await getNearbyCoupons(latitude, longitude, selectedIds);
-          if (Array.isArray(response)) {
-            const stores: StoreData[] = response.map((place: PlaceInfo) => ({
-              id: place.id,
-              name: place.name,
-              address: place.address,
-              latitude: place.lat,
-              longitude: place.lng,
-              brandName: place.brandName,
-            }));
-            setNearbyStores(stores);
-            setCenter(latitude, longitude);
-            setZoom(14);
-            console.log('근처 매장 조회');
-            console.log(latitude, longitude);
-          }
-        } catch (e) {
-          console.log('근처 매장 조회 실패', e);
-        } finally {
-          setError(null);
-          setLoadingLocation(false);
-        }
+        setError(null);
+        setLoadingLocation(false);
       },
       (error) => {
         console.error('위치 조회 실패:', error);
@@ -164,7 +150,7 @@ export default function StoreMap({
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 },
     );
-  }, [setCenter, setZoom]);
+  }, []);
 
   const safeCleanupMarkers = useCallback(() => {
     markersRef.current.forEach((marker, index) => {
@@ -216,15 +202,12 @@ export default function StoreMap({
       return;
     }
 
-    mapInstance.setCenter(new naver.maps.LatLng(currentLocation.lat, currentLocation.lng));
-    mapInstance.setZoom(14);
     if (markersInitializedRef.current && markersRef.current.length === nearbyStores.length) return;
 
     safeCleanupMarkers();
 
     try {
       if (currentLocation) {
-        console.log(currentLocation);
         const locationMarker = addMarker({
           position: { lat: currentLocation.lat, lng: currentLocation.lng },
           title: '현재 위치',
@@ -278,6 +261,8 @@ export default function StoreMap({
           </svg>
         `;
 
+        console.log(`Generated SVG with fill color: ${dynamicPinSvg}`);
+
         const marker = addMarker({
           position: { lat: store.latitude, lng: store.longitude },
           title: store.name,
@@ -325,11 +310,6 @@ export default function StoreMap({
     } catch {
       markersInitializedRef.current = false;
     }
-    return () => {
-      // Cleanup
-      safeCleanupMarkers();
-      markersInitializedRef.current = false;
-    };
   }, [
     isLoaded,
     isApiReady,

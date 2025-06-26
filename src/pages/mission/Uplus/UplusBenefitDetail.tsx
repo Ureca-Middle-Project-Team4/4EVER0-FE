@@ -94,12 +94,12 @@ export const BenefitDetailModal = ({ isOpen, onClose, selectedDate }: BenefitDet
                 >
                   {/* 브랜드 로고 */}
                   <div
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden`}
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0`}
                   >
                     <img
-                      src={benefit.image_url}
+                      src={benefit.imageUrl}
                       alt={benefit.brand}
-                      className="w-13 h-13 object-cover"
+                      className="w-8 h-8 object-contain"
                       onError={(e) => {
                         const target = e.currentTarget;
                         target.style.display = 'none';

@@ -12,7 +12,6 @@ import { SubscriptionHeader } from './SubscriptionHeader';
 import { MainSubscriptionStep } from './MainSubscriptionStep';
 import { LifeBenefitsStep } from './LifeBenefitsStep';
 import { PaymentStep } from './PaymentStep';
-import { claimCoupon } from '@/apis/coupon/claimCoupon'; // API 호출 추가
 
 interface SubscriptionStepsProps {
   className?: string;
@@ -37,21 +36,8 @@ export const SubscriptionSteps = ({ className }: SubscriptionStepsProps) => {
 
   // React Query 구독 가입 mutation
   const subscribeMutation = usePostSubscription({
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       console.log('구독 성공:', data.data);
-      // 구독 성공 시 쿠폰 claim API 호출
-      if (data.data?.brand_id) {
-        try {
-          const response = await claimCoupon(data.data.brand_id);
-          if (response.data?.data.coupon_id) {
-            console.log('쿠폰 claim 성공:', response.data.data.coupon_id);
-          } else {
-            console.error('쿠폰 claim 실패');
-          }
-        } catch (error) {
-          console.error('쿠폰 claim 중 오류 발생:', error);
-        }
-      }
       navigate('/me/subscriptions');
     },
     onError: (error) => {
@@ -187,7 +173,6 @@ export const SubscriptionSteps = ({ className }: SubscriptionStepsProps) => {
         return false;
     }
   }, [currentStep, selectedMainItems, selectedLifeBrands]);
-
   return (
     <div className={cn('w-full', className)}>
       <SubscriptionHeader

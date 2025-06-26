@@ -62,7 +62,7 @@ export const UplusBenefitPreview = ({ onLoadComplete }: UplusBenefitPreviewProps
                 {/* 브랜드 로고 - 오른쪽 하단, 원형 */}
                 <div className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg z-10">
                   <img
-                    src={benefit.image_url}
+                    src={benefit.imageUrl}
                     alt={benefit.brand}
                     className="w-8 h-8 object-contain"
                     onError={(e) => {

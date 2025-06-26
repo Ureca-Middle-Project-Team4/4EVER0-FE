@@ -10,7 +10,7 @@ export const cardVariants = cva(
         outline: 'border-2 shadow-none',
         ghost: 'border-none shadow-none bg-transparent',
         // 구독 관련
-        subscription: 'border-border hover:shadow-md hover:border-pink-300',
+        subscription: 'border-pink-200 hover:shadow-md hover:border-pink-300',
         selected: 'border-pink-500 bg-pink-50 shadow-md ring-2 ring-pink-500/20',
         // 상태별
         success: 'border-green-200 bg-green-50',

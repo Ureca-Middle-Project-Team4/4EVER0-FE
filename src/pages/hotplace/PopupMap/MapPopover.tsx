@@ -34,7 +34,7 @@ export default function MapPopover({
       style={{ pointerEvents: 'auto' }} // ← 이 줄 추가
     >
       {children}
-      <div className="px-4 py-2 bg-gray-100 border-border rounded-t-2xl">
+      <div className="px-4 py-2 bg-gray-100 border-border rounded-2xl">
         <div className="flex items-center justify-between">
           <div className="text-sm font-medium text-gray-700">매장 정보</div>
 
@@ -54,7 +54,7 @@ export default function MapPopover({
       </div>
 
       {/* 본문 */}
-      <div className="p-4 gap-y-1 gap-x-1 bg-white shadow-md rounded-b-2xl">
+      <div className="p-4 gap-y-1 gap-x-1 bg-white shadow-md rounded-2xl">
         {/* 메인 콘텐츠 - 좌측 정보, 우측 이미지 */}
         <div className="flex items-center gap-3 mb-4">
           {/* 좌측 정보 */}

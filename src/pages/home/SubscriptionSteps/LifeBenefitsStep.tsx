@@ -17,7 +17,7 @@ const BRAND_CATEGORIES: { value: BrandCategory; label: string }[] = [
   { value: '전체', label: '전체' },
   { value: '디저트/음료', label: '디저트/음료' },
   { value: '편의점/쇼핑', label: '편의점/쇼핑' },
-  { value: '식당/베이커리', label: '식당/베이커리' },
+  { value: '식당/베이커리', label: '베이커리' },
 ];
 
 export function LifeBenefitsStep({
@@ -77,14 +77,14 @@ export function LifeBenefitsStep({
                   onClick={() => onToggleBrand(brand)}
                 >
                   <CardContent className="p-4">
-                    <div className="flex justify-between items-start mb-2  overflow-hidden">
+                    <div className="flex justify-between items-start mb-2">
                       <img
                         src={brand.image_url}
                         alt={brand.title}
-                        className="w-8 h-8 object-cover rounded-2xl shadow-md"
+                        className="w-8 h-8 object-contain"
                       />
                       {isSelected && (
-                        <div className="w-5 h-5 bg-pink-500 flex rounded-full items-center justify-center">
+                        <div className="w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center">
                           <Check className="w-3 h-3 text-white" />
                         </div>
                       )}

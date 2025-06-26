@@ -82,21 +82,16 @@ const Subscriptions: React.FC = () => {
       ) : (
         <div className="grid grid-cols-2 gap-4 w-full">
           {merged.map((sub) => (
-            <Card
-              key={sub.id}
-              variant="subscription"
-              clickable
-              className="relative w-full  bg-gray-50"
-            >
-              <CardContent className="p-3 pt-0 gap-2 text-center">
+            <Card key={sub.id} variant="subscription" clickable className="relative w-full">
+              <CardContent className="p-3 pt-0  text-center">
                 {sub.image_url && (
                   <img
                     src={sub.image_url}
                     alt={sub.main_title}
-                    className="w-25 h-25 rounded-2xl shadow-md mb-3 object-contain mx-auto"
+                    className="w-32 h-32 object-contain mx-auto"
                   />
                 )}
-                <h3 className="font-bold text-md mb-1">{sub.main_title.split('+')[0].trim()}</h3>{' '}
+                <h3 className="font-medium text-sm mb-1">{sub.main_title.split('+')[0].trim()}</h3>{' '}
                 <p className="text-xs text-gray-600 mb-2">{sub.brand_title}</p>
                 <div className="text-pink-600 font-semibold text-sm">{formatPrice(sub.price)}</div>
               </CardContent>
