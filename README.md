@@ -67,7 +67,7 @@
 
 ### 4. 마이페이지에서 혜택 및 이용 현황 확인
 
-<img src="https://github.com/user-attachments/assets/87627d7c-8576-4f37-aeee-72dd3198af1a" width="500"/>
+<img src="https://github.com/user-attachments/assets/3f90cbeb-c945-45e1-a736-700e76a95693" width="500"/>
 
 * 나의 혜택/포인트/미션 내역 한눈에 확인
 * UI 기반 시각화 제공
