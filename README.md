@@ -22,7 +22,7 @@
 | **주제**       | LG U+ 요금제 추천 AI 챗봇 서비스 |
 | **타겟층**     | 합리적 소비를 추구하는 MZ세대    |
 | **개발 기간**  | 2025.06.04 ~ 2025.06.26 (약 3주) |
-| **팀 구성**    | Frontend 5명 (Full-Stack 개발)   |
+| **팀 구성**    | 5명 (Full-Stack 개발)   |
 
 ### 개발 동기
 
@@ -37,28 +37,51 @@
 ## 시연 영상
 [![시연 영상](http://img.youtube.com/vi/LGXlG-HELl8/0.jpg)](https://www.youtube.com/watch?v=LGXlG-HELl8)
 
-
 ## 주요 기능
 
-### **1. AI 기반 멀티턴 챗봇 & 요금제 추천**
+### 1. AI 기반 멀티턴 챗봇 & 요금제 추천
 
-- **LangChain + OpenAI 템플릿 아키텍처**: 자연어 처리로 사용자 성향과 패턴 분석해 LG U+ 요금제 및 구독 서비스 맞춤 추천
-- **멀티턴 세션 관리**: Redis 기반 대화 상태 보존, 세션 마이그레이션 및 플로우 자동 전환
-- **StreamingThrottle 프로세서**: 청크별 지연 제어로 실제 사람 대화 패턴 모방 구현
-- **`useStreamingChat` 커스텀 훅**: JSON/텍스트 혼합 메시지 처리 및 실시간 카드 렌더링 지원
+<img src="https://github.com/user-attachments/assets/48d44c5c-f36d-41cf-b45a-34419505cc1c" width="500"/>
 
-### **2. 위치 기반 혜택 추천 & 스토어맵**
+* LangChain + OpenAI 템플릿 아키텍처
+* 자연어 기반 LG U+ 요금제/구독 추천
+* Redis 기반 멀티턴 세션 저장 및 흐름 전환
+* StreamingThrottle 기반 청크 지연 조절
+* 커스텀 훅 `useStreamingChat`으로 카드 응답 처리
 
-- **Naver Geolocation + Maps API**: 사용자 위치 감지 및 Reverse Geocoding으로 주소 추출
-- **Google Search 기반 스토어맵**: 좋아요한 브랜드의 오프라인 매장 정보 제공 및 반경 내 혜택 추천
-- **브랜드 선호도 알고리즘**: 좋아요한 쿠폰의 브랜드 기반 유독픽 서비스 추천
+### 2. 위치 기반 팝업스토어 정보 & 쿠폰 혜택 제공
 
-### **3. 소셜 로그인 & 보안 인증 시스템**
+<img src="https://github.com/user-attachments/assets/50d4be6c-8db4-4304-bd2f-88057810ea72" width="300"/>
 
-- **OAuth2 통합 인증**: Kakao/Google/Naver 로그인 지원, JWT는 HttpOnly Cookie로 관리
-- **Redis 세션 관리**: Refresh Token 저장 및 userId/authId는 Zustand + localStorage 동기화
-- **Axios 인터셉터**: 401 응답 시 자동 refresh 요청 후 재시도 처리 구현
-- **하이브리드 인증**: 서버 기반 인증 + 프론트엔드 상태 동기화 및 리프레시 트리거 분리
+* Naver 지도 API 및 Reverse Geocoding 활용
+* 내 위치 주변 팝업스토어 및 선호 브랜드 기반 쿠폰 추천
+* 선호 브랜드 저장 기능
+
+### 3. 미션 중심 인터랙션 & 유플투쁠 시스템
+
+<img src="https://github.com/user-attachments/assets/3d7f656d-c882-49d3-a24c-5b55b26a42e9" width="500"/>
+
+* 출석, 공유, 탐색 등 참여형 미션 구성
+* 포인트 획득 → 혜택 연계 구조 설계
+* 연속 출석 보상 및 유플투쁠 게이미피케이션 적용
+
+### 4. 마이페이지에서 혜택 및 이용 현황 확인
+
+<img src="https://github.com/user-attachments/assets/87627d7c-8576-4f37-aeee-72dd3198af1a" width="500"/>
+
+* 나의 혜택/포인트/미션 내역 한눈에 확인
+* UI 기반 시각화 제공
+* 사용자 참여 히스토리 기반 맞춤 정보 제공
+
+### 5. 접근 제어 및 로그인 유도 기능
+
+<img src="https://github.com/user-attachments/assets/2d33709e-6668-418f-87fd-d7fb50e0b668" width="500"/>
+
+* 핵심 기능 보호 + 손쉬운 접근 가능
+* 자연스러운 로그인 흐름 유도
+* 비회원 최대 5회 채팅, 일부 기능만 체험 가능
+
+
 
 ## 팀원 소개 및 역할
 
