@@ -34,6 +34,10 @@
   - **AI 챗봇 기반 성향 분석**을 통한 맞춤형 요금제 및 서비스 추천
   - **MZ세대의 스마트한 통신 라이프스타일** 지원
 
+## 시연 영상
+[![시연 영상](http://img.youtube.com/vi/LGXlG-HELl8/0.jpg)](https://www.youtube.com/watch?v=LGXlG-HELl8)
+
+
 ## 주요 기능
 
 ### **1. AI 기반 멀티턴 챗봇 & 요금제 추천**
