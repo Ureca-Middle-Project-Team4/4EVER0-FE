@@ -143,8 +143,8 @@ export async function processUBTIStreamWithThrottle(
                 // JSON인 경우 즉시 전송
                 onChunk({ data });
               } else {
-                // 일반 텍스트는 그대로 전송
-                onChunk({ data });
+                // 일반 텍스트만 throttle 적용
+                await throttle.processChunk(data, onChunk);
               }
             }
           }
